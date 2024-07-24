@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-hot-toast";
 
 export const instance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_ENDPOINT_URL,
@@ -18,7 +17,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => response,
     async (error) => {
-        toast.error(error.message);
         return error;
     }
 );
