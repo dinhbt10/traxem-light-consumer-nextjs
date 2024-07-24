@@ -2,6 +2,7 @@ import TabsComponent from "components/TabsComponent";
 import { instance } from "libs/axios";
 import Head from "next/head";
 import { Suspense } from "react";
+import { Metadata, ResolvingMetadata } from "next";
 import { dataTab, getPreviewData } from "services/product.service";
 
 async function getDataQRDetail(id: string) {
@@ -12,13 +13,13 @@ async function getDataQRDetail(id: string) {
     return res.data;
 }
 
-export default async function QRDetail({ params: { id } }: { params: { id: string } }) {
+export default async function QRDetail({ params: { id } }: { params: { id: string } }, parent: ResolvingMetadata) {
     const data = await getDataQRDetail(id);
     return (
         <>
             <Head>
                 <title>{data?.title}</title>
-                <meta name="description" content={data?.body} />
+                <meta name="og:description" content={data?.body} />
                 {/* <meta name="keywords" content={metadata.keywords.join(", ")} />
                 <meta property="og:image" content={metadata.image} /> */}
             </Head>
