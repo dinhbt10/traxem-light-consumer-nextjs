@@ -2,34 +2,39 @@ import TabsComponent from "components/TabsComponent";
 import { instance } from "libs/axios";
 import Head from "next/head";
 import { Suspense } from "react";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { dataTab, getPreviewData } from "services/product.service";
 
+type Props = {
+    params: {
+        id: string;
+    };
+};
 async function getDataQRDetail(id: string) {
     const res = await instance.get(`posts/${id}`);
-    // if (!res.data) {
-    //     throw new Error("Fail to fetch data");
-    // }
     return res.data;
 }
 
-export default async function QRDetail({ params: { id } }: { params: { id: string } }, parent: ResolvingMetadata) {
-    const data = await getDataQRDetail(id);
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
+    const postData = await getDataQRDetail(params.id);
+    return {
+        title: `Post ${params.id}`,
+        description: `${postData.body}`
+    };
+};
+
+export default async function QRDetail({ params: { id } }: Props) {
+    const postData = await getDataQRDetail(id);
     return (
         <>
-            <Head>
-                <title>{data?.title}</title>
-                <meta name="og:description" content={data?.body} />
-                {/* <meta name="keywords" content={metadata.keywords.join(", ")} />
-                <meta property="og:image" content={metadata.image} /> */}
-            </Head>
-            <Suspense fallback={<div>Loading...</div>}>
-                <h1>
-                    {data?.title} + {id}
-                </h1>
-                <h1>{data?.body}</h1>
-                {/* <TabsComponent tabsList={data.data.tabs?.sort((a: any, b: any) => a.index - b.index) ?? []} listImage={data?.images} /> */}
-            </Suspense>
+            {/* <Head>
+                <title>{metadata.title}</title>
+                <meta name="description" content={metadata.description} />
+                <meta property="og:title" content={metadata.openGraph.title} />
+                <meta property="og:description" content={metadata.openGraph.description} />
+            </Head> */}
+            <h1>{postData.title}</h1>
+            <p>{postData.body}</p>
         </>
     );
 }
