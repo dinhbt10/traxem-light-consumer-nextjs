@@ -1,5 +1,4 @@
 import TabsComponent from "components/TabsComponent";
-import { instance } from "libs/axios";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { dataTab, getPreviewData } from "services/product.service";
@@ -18,22 +17,26 @@ async function getDataQRDetail(id: string) {
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
     const postData = await dataTab(params.id);
+    const { data } = postData.data;
+
     return {
         title: {
             absolute: `Post ${params.id}`
-        }
+        },
+        description: `${data.nameProduct} - ${data.nameLot}`
     };
 };
 
 export default async function QRDetail({ params: { id } }: Props) {
     const postData = await getDataQRDetail(id);
     const t = await getTranslations("HomePage");
+    const { nameProduct, nameLot } = postData.data;
 
     return (
         <>
             <Typography>{t("title")}</Typography>
-            <h1>{postData?.title}</h1>
-            <p>{postData?.url}</p>
+            <h1>{nameProduct}</h1>
+            <p>{nameLot}</p>
         </>
     );
 }
