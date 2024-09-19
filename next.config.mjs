@@ -12,6 +12,11 @@ const nextConfig = {
                 hostname: "192.168.0.32",
                 port: "8764",
                 pathname: "/**"
+            },
+            {
+                protocol: "https",
+                hostname: "light.traxem.vn",
+                pathname: "/**"
             }
         ]
     }
