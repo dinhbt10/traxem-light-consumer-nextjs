@@ -18,7 +18,19 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
     return {
         title: {
-            absolute: `Post ${params.id}`
+            absolute: `${data?.nameProduct} - ${data?.nameLot}`
+        },
+        openGraph: {
+            title: `${data?.nameProduct} - ${data?.nameLot}`,
+            description: `${data?.nameProduct} - ${data?.nameLot}`,
+            images: [
+                {
+                    url: data.images[0].imageUrl,
+                    width: 800,
+                    height: 600,
+                    alt: data?.nameProduct
+                }
+            ]
         },
         description: `${data?.nameProduct} - ${data?.nameLot}`
     };
