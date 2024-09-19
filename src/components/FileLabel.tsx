@@ -1,3 +1,5 @@
+"use client";
+
 import { Typography, SxProps } from "@mui/material";
 
 type FieldLabelProps = {

@@ -37,3 +37,21 @@ export const dataTab = (id: string): AxiosPromise => {
 
     return instance(request);
 };
+
+export const getListLanguage = (qrSeries: string): AxiosPromise => {
+    const request: AxiosRequestConfig = {
+        url: `product/products/get-language/${qrSeries}`,
+        method: "GET"
+    };
+
+    return instance(request);
+};
+
+export const switchLanguage = (id: string): AxiosPromise => {
+    const request: AxiosRequestConfig = {
+        url: `product/products/switch-language/${id}`,
+        method: "GET"
+    };
+
+    return instance(request);
+};

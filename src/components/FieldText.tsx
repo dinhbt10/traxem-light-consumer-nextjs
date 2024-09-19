@@ -1,4 +1,8 @@
+"use client";
+
 import { Stack, SxProps, Typography } from "@mui/material";
+import { configLanguageDefault, convertToDate, IProductInfo } from "app/product/[id]/config";
+import { useParams } from "next/navigation";
 import { FieldLabel, FieldLabelBold } from "./FileLabel";
 
 export type FieldTextProp = {
@@ -6,9 +10,37 @@ export type FieldTextProp = {
     value: string;
     tabIndex?: number;
     sx?: SxProps;
+    data?: IProductInfo;
+    labelListLanguage?: string;
 };
 
-const FieldText: React.FC<FieldTextProp> = ({ label, value, tabIndex, sx }) => {
+const FieldText: React.FC<FieldTextProp> = ({ label, value, tabIndex, sx, data }) => {
+    let valueShow = "";
+    const params = useParams();
+    const id = params.id;
+
+    configLanguageDefault.forEach((item) => {
+        Object.entries(item.data).forEach(([key, value]) => {
+            if (value === label) {
+                if (key === "batchName") {
+                    valueShow = data?.nameLot || "";
+                }
+                if (key === "manufacturingBatch") {
+                    valueShow = data?.lotCode || "";
+                }
+                if (key === "manufacturingDate") {
+                    valueShow = data?.productionDate ? convertToDate(data.productionDate) : "";
+                }
+                if (key === "expiryDate") {
+                    valueShow = data?.expirationDate ? convertToDate(data.expirationDate) : "";
+                }
+                if (key === "qRSerial") {
+                    valueShow = "";
+                }
+            }
+        });
+    });
+
     return (
         <Stack
             mt="8px"
@@ -28,9 +60,19 @@ const FieldText: React.FC<FieldTextProp> = ({ label, value, tabIndex, sx }) => {
                 />
             )}
             {tabIndex !== 0 && label && <FieldLabelBold label={label} />}
-            <Typography fontSize={16} flex="1" textAlign={tabIndex === 0 ? "end" : "justify"}>
-                {value}
-            </Typography>
+            {tabIndex === 0 && (
+                <Typography fontSize={16} flex="1" textAlign={"end"}>
+                    {valueShow || id}
+                </Typography>
+            )}
+            {tabIndex !== 0 && (
+                <Typography
+                    fontSize={16}
+                    flex="1"
+                    textAlign={"end"}
+                    dangerouslySetInnerHTML={{ __html: value && String(value).replace(/\n/g, "<br>") }}
+                ></Typography>
+            )}
         </Stack>
     );
 };

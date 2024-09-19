@@ -1,24 +1,33 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { Tabs, Tab, Box, Stack, Typography } from "@mui/material";
 import { ITabs } from "types/tabs";
-import { FieldType } from "types/conmom";
 import FieldText from "./FieldText";
-// import { ITabs } from "pages/Config";
+import { formatDate, IProductInfo } from "app/product/[id]/config";
+import { FieldType } from "types/conmom";
+import FieldAudios from "./FieldAudios";
+import FieldFiles from "./FieldFiles";
+import FieldVideoEmbedded from "./FieldVideoEmbedded";
+import FieldDate from "./FieldDate";
+import FieldDatetime from "./FieldDatetime";
+import FieldRichText from "./FieldRichText";
+import formatValueRichText from "libs/formatValueRichText";
+import ModalPlayVideo from "./ModalPlayVideo";
+import ViewListImage from "./SlideImagePreview";
+import ImageSlider from "./ImageSlider";
+import FieldVideos from "./FieldVideos";
 // import { FieldType, formatDate } from "types/common";
 // import ViewListImage from "./SlideImagePreview";
 // import ModalPlayVideo from "./ModalPlayVideo";
-// import ImageSlider from "components/ImageSlider";
-// import { formatValueRichText, openPhotoswipe } from "utils/";
-// import { FieldRichText, FieldText, FieldAudios, FieldDate, FieldDatetime, FieldVideos, FieldVideoEmbedded, FieldFiles } from "components";
+// import { formatValueRichText, openPhotoswipe } from "utils";
 
 interface ITabsList {
     tabsList: ITabs[];
     listImage: any;
+    data: IProductInfo;
+    labelListLanguage: string;
 }
 
-const TabsComponent = ({ tabsList }: ITabsList) => {
+const TabsComponent = ({ tabsList, data, labelListLanguage }: ITabsList) => {
     const [tabIndex, setTabIndex] = useState<number>(0);
     const iconTimeoutRef = useRef<number | null>(null);
     const [openShowListArr, setOpenListArr] = useState<boolean>(false);
@@ -34,6 +43,7 @@ const TabsComponent = ({ tabsList }: ITabsList) => {
     useEffect(() => {
         return () => {
             if (iconTimeoutRef.current) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 clearTimeout(iconTimeoutRef.current);
             }
         };
@@ -58,7 +68,7 @@ const TabsComponent = ({ tabsList }: ITabsList) => {
 
     // set event zoom on images in richtext
     // useEffect(() => {
-    //     const eImagesInRichText = document.querySelectorAll(".text-editor .image-richtext");
+    //     const eImagesInRichText = document.querySelectorAll(".text-editor p img");
     //     eImagesInRichText.forEach((eImage) => {
     //         eImage.addEventListener("click", () => openPhotoswipe(eImage as HTMLImageElement));
     //     });
@@ -71,8 +81,6 @@ const TabsComponent = ({ tabsList }: ITabsList) => {
             eAlertCopyrightFroalaEditor.remove();
         });
     });
-
-    console.log(tabsList);
 
     return (
         <>
@@ -143,93 +151,100 @@ const TabsComponent = ({ tabsList }: ITabsList) => {
                                     switch (field.type) {
                                         case FieldType.IMAGE: {
                                             return (
-                                                // <ImageSlider
-                                                //     key={keyField}
-                                                //     images={field?.values?.map((item: any) => ({
-                                                //         src: item.dowloadUrl
-                                                //     }))}
-                                                // />
-                                                <div>abc</div>
+                                                <ImageSlider
+                                                    key={keyField}
+                                                    images={field?.values?.map((item: any) => ({
+                                                        src: item.dowloadUrl
+                                                    }))}
+                                                />
                                             );
                                         }
-                                        // case FieldType.AUDIO: {
-                                        //     return <FieldAudios value={field.values} />;
-                                        // }
-                                        // case FieldType.FILE: {
-                                        //     return (
-                                        //         <Stack
-                                        //             key={keyField}
-                                        //             direction="row"
-                                        //             justifyContent="start"
-                                        //             alignItems="center"
-                                        //             width="100%"
-                                        //             flexWrap="wrap"
-                                        //             gap="5px"
-                                        //         >
-                                        //             <FieldFiles value={field.values} />
-                                        //         </Stack>
-                                        //     );
-                                        // }
-                                        // case FieldType.VIDEO: {
-                                        //     let data = [];
-                                        //     data = field.values.map((item: any) => ({
-                                        //         url: item.dowloadUrl
-                                        //     }));
-                                        //     return (
-                                        //         <Stack spacing={2} key={keyField}>
-                                        //             {data.map((video: any, index: number) => {
-                                        //                 if (index !== 0) return;
-                                        //                 return (
-                                        //                     <FieldVideos
-                                        //                         onPlayVideo={handleSaveLink}
-                                        //                         videoCurrent={video}
-                                        //                         videoList={field.values}
-                                        //                     />
-                                        //                 );
-                                        //             })}
-                                        //         </Stack>
-                                        //     );
-                                        // }
-                                        // case FieldType.VIDEO_EMBEDDED: {
-                                        //     return <FieldVideoEmbedded value={field.values[0]} key={keyField} />;
-                                        // }
-                                        // case FieldType.DATE: {
-                                        //     if (field.values[0] === "30-11-0002") return;
-                                        //     if (typeof field.values[0] === "string" && tabIndex === 0) {
-                                        //         return (
-                                        //             <FieldText
-                                        //                 label={field.label}
-                                        //                 value={formatDate(field.values[0])}
-                                        //                 key={keyField}
-                                        //                 tabIndex={tabIndex}
-                                        //             />
-                                        //         );
-                                        //     }
-                                        //     return <FieldDate value={field.values[0]} key={keyField} />;
-                                        // }
-                                        // case FieldType.DATETIME: {
-                                        //     if (field.values[0] === "30-11-0002") return;
-                                        //     if (typeof field.values[0] === "string" && tabIndex === 0) {
-                                        //         return (
-                                        //             <FieldText
-                                        //                 label={field.label}
-                                        //                 value={formatDate(field.values[0])}
-                                        //                 key={keyField}
-                                        //                 tabIndex={tabIndex}
-                                        //             />
-                                        //         );
-                                        //     }
-                                        //     return <FieldDatetime value={field.values[0]} key={keyField} />;
-                                        // }
-                                        // case FieldType.RICHTEXT: {
-                                        //     if (typeof field.values[0] !== "string") return;
-                                        //     // format value richtext for values image;
-                                        //     let formatHTML: string = formatValueRichText(field.values[0]);
-                                        //     return <FieldRichText label={field.label} value={formatHTML} key={keyField} />;
-                                        // }
+                                        case FieldType.AUDIO: {
+                                            return <FieldAudios value={field.values} />;
+                                        }
+                                        case FieldType.FILE: {
+                                            return (
+                                                <Stack
+                                                    key={keyField}
+                                                    direction="row"
+                                                    justifyContent="start"
+                                                    alignItems="center"
+                                                    width="100%"
+                                                    flexWrap="wrap"
+                                                    gap="5px"
+                                                >
+                                                    <FieldFiles value={field.values} />
+                                                </Stack>
+                                            );
+                                        }
+                                        case FieldType.VIDEO: {
+                                            let data = [];
+                                            data = field.values.map((item: any) => ({
+                                                url: item.dowloadUrl
+                                            }));
+                                            return (
+                                                <Stack spacing={2} key={keyField}>
+                                                    {data.map((video: any, index: number) => {
+                                                        if (index !== 0) return;
+                                                        return (
+                                                            <FieldVideos
+                                                                key={index}
+                                                                onPlayVideo={handleSaveLink}
+                                                                videoCurrent={video}
+                                                                videoList={field.values}
+                                                            />
+                                                        );
+                                                    })}
+                                                </Stack>
+                                            );
+                                        }
+                                        case FieldType.VIDEO_EMBEDDED: {
+                                            return <FieldVideoEmbedded value={field.values[0]} key={keyField} />;
+                                        }
+                                        case FieldType.DATE: {
+                                            if (field.values[0] === "30-11-0002") return;
+                                            if (typeof field.values[0] === "string" && tabIndex === 0) {
+                                                return (
+                                                    <FieldText
+                                                        label={field.label}
+                                                        value={formatDate(field.values[0])}
+                                                        key={keyField}
+                                                        tabIndex={tabIndex}
+                                                    />
+                                                );
+                                            }
+                                            return <FieldDate value={field.values[0]} key={keyField} />;
+                                        }
+                                        case FieldType.DATETIME: {
+                                            if (field.values[0] === "30-11-0002") return;
+                                            if (typeof field.values[0] === "string" && tabIndex === 0) {
+                                                return (
+                                                    <FieldText
+                                                        label={field.label}
+                                                        value={formatDate(field.values[0])}
+                                                        key={keyField}
+                                                        tabIndex={tabIndex}
+                                                    />
+                                                );
+                                            }
+                                            return <FieldDatetime value={field.values[0]} key={keyField} />;
+                                        }
+                                        case FieldType.RICHTEXT: {
+                                            if (typeof field.values[0] !== "string") return;
+                                            // format value richtext for values image;
+                                            let formatHTML: string = formatValueRichText(field.values[0]);
+                                            return <FieldRichText label={field.label} value={formatHTML} key={keyField} />;
+                                        }
                                         default: {
                                             return (
-                                                <FieldText label={field.label} value={field.values[0]} key={keyField} tabIndex={tabIndex} />
+                                                <FieldText
+                                                    label={field.label}
+                                                    value={field.values[0]}
+                                                    key={keyField}
+                                                    tabIndex={tabIndex}
+                                                    data={data}
+                                                    labelListLanguage={labelListLanguage}
+                                                />
                                             );
                                         }
                                     }
@@ -239,14 +254,15 @@ const TabsComponent = ({ tabsList }: ITabsList) => {
                     })}
                 </Box>
             )}
-            {/* <ViewListImage isPreviewImageInfo={openShowListArr} setIsPreviewImageInfo={setOpenListArr} productURL={ListArrImage} />
+
+            <ViewListImage isPreviewImageInfo={openShowListArr} setIsPreviewImageInfo={setOpenListArr} productURL={ListArrImage} />
             <ModalPlayVideo
                 isOpen={isOpenPlayVideo}
                 url={urlVideo?.map((item: any) => ({
                     url: item.dowloadUrl
                 }))}
                 setIsOpenPlayVideo={setIsOpenPlayVideo}
-            /> */}
+            />
         </>
     );
 };
