@@ -15,15 +15,11 @@ import ModalPlayVideo from "./ModalPlayVideo";
 import ViewListImage from "./SlideImagePreview";
 import ImageSlider from "./ImageSlider";
 import FieldVideos from "./FieldVideos";
-// import { FieldType, formatDate } from "types/common";
-// import ViewListImage from "./SlideImagePreview";
-// import ModalPlayVideo from "./ModalPlayVideo";
-// import { formatValueRichText, openPhotoswipe } from "utils";
 
 interface ITabsList {
     tabsList: ITabs[];
     listImage: any;
-    data: IProductInfo;
+    data?: IProductInfo;
     labelListLanguage: string;
 }
 
