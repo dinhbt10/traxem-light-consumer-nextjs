@@ -1,7 +1,7 @@
 "use client";
 
 import { Stack, SxProps, Typography } from "@mui/material";
-import { configLanguageDefault, convertToDate, IProductInfo } from "app/product/[id]/config";
+import { configLanguageDefault, convertToDate, IProductInfo } from "@/app/[locales]/product/[id]/config";
 import { useParams } from "next/navigation";
 import { FieldLabel, FieldLabelBold } from "./FileLabel";
 

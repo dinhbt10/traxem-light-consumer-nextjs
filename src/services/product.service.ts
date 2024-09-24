@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosPromise } from "axios";
-import { instance } from "libs/axios";
+import { instance } from "@/libs/axios";
 
 export const getPreviewData = <T>(qrSerise: T): AxiosPromise => {
     const request: AxiosRequestConfig = {

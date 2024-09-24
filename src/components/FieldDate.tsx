@@ -1,7 +1,7 @@
 "use client";
+import { formatDate } from "@/app/[locales]/product/[id]/config";
 import { Stack, Typography } from "@mui/material";
 import { Calendar } from "./icons";
-import { formatDate } from "app/product/[id]/config";
 
 type FieldDateProp = {
     value: string;

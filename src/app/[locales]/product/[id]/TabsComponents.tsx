@@ -1,18 +1,19 @@
 "use client";
 
+import Img from "@/assets/Frame 66.png";
+import DefaultImageProduct from "@/assets/ina.png";
+import { Company, Location, Logo, Phone } from "@/components/icons";
+import Sliders from "@/components/Sliders";
+import TabsComponent from "@/components/TabsComponent";
+import { configLanguage } from "@/constants/common";
+import { useRouter } from "@/i18n/routing";
+import { instance } from "@/libs/axios";
+import { getListLanguage, getPreviewData, switchLanguage, updateCount } from "@/services/product.service";
 import { Box, CircularProgress, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
-import Sliders from "components/Sliders";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Img from "../../../../public/Frame 66.png";
 import Image from "next/image";
-import { instance } from "libs/axios";
-import { getListLanguage, getPreviewData, switchLanguage, updateCount } from "services/product.service";
-import { configLanguage, IIofoBusiness, IProductInfo } from "./config";
 import { useParams, useSearchParams } from "next/navigation";
-import DefaultImageProduct from "../../../../public/ina.png";
-import { Company, Location, Logo, Phone } from "components/icons";
-import TabsComponent from "components/TabsComponent";
+import React, { useEffect, useState } from "react";
+import { IIofoBusiness, IProductInfo } from "./config";
 
 const TabsComponents = () => {
     const router = useRouter();

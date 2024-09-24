@@ -10,3 +10,8 @@ export enum FieldType {
     VIDEO_EMBEDDED = "VIDEO_EMBEDDED",
     AUDIO = "AUDIO"
 }
+
+export type DefaultLanguage = {
+  value: string;
+  label: string;
+};

@@ -1,5 +1,5 @@
 import { Button, Dialog, Stack } from "@mui/material";
-import { IconClose } from "components/icons";
+import { IconClose } from "@/components/icons";
 import Image from "next/image";
 
 type Props = {

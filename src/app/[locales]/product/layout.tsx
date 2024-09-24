@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { NextPage } from "next";
-import Container from "components/Container";
+import Container from "@/components/Container";
 
 const DashboardLayout: NextPage<{ children: ReactNode }> = ({ children }) => {
     return <Container wrapProps={{ sx: { maxWidth: "395px", width: "100%", margin: "auto" } }}>{children}</Container>;

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DefaultImageSlider from "../../public/default-product-image.jpg";
+import DefaultImageSlider from "@/assets/default-product-image.jpg";
 import { Box, Stack } from "@mui/material";
 import Image from "next/image";
 import Slider, { Settings } from "react-slick";

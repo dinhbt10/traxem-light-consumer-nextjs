@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { Calendar } from "./icons";
 import React from "react";
-import { formatDateTime24 } from "app/product/[id]/config";
+import { formatDateTime24 } from "@/app/[locales]/product/[id]/config";
 
 type FieldDatetimeProp = {
     value: string;

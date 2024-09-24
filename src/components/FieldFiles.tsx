@@ -1,7 +1,7 @@
 "use client";
 import { Stack, Typography } from "@mui/material";
 import { saveAs } from "file-saver";
-import { download } from "services/product.service";
+import { download } from "@/services/product.service";
 import { FieldLabelBold } from "./FileLabel";
 import { FileDown } from "./icons";
 
@@ -18,7 +18,7 @@ const FieldFiles: React.FC<FieldFilesProp> = ({ label, value }) => {
     const handleClickOpenFile = async (dowload: { dowloadUrl: string; fileName: string; id: string; metaData: { fileName: string } }) => {
         try {
             const res = await download(`${dowload.fileName}`);
-            const blob = new Blob([res.data], { type: "application/octet-stream" });
+            const blob = new Blob([res.data], { type: "@/application/octet-stream" });
             saveAs(blob, dowload.metaData?.fileName);
         } catch (error) {
             console.error("Error while downloading the file:", error);
