@@ -1,9 +1,5 @@
-import TabsComponent from "components/TabsComponent";
-import { Suspense } from "react";
 import { Metadata } from "next";
-import { dataTab, getPreviewData } from "services/product.service";
-import { getTranslations } from "next-intl/server";
-import { Typography } from "@mui/material";
+import { dataTab } from "services/product.service";
 import TabsComponents from "./TabsComponents";
 
 type Props = {
